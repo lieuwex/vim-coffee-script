@@ -19,7 +19,7 @@ syntax sync fromstart
 " priority for keywords is higher than matches. This causes keywords to be
 " highlighted inside matches, even if a match says it shouldn't contain them --
 " like with coffeeAssign and coffeeDot.
-syn match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/ display
+syn match coffeeStatement /\<\%(return\|break\|continue\|throw\|yield\)\>/ display
 hi def link coffeeStatement Statement
 
 syn match coffeeRepeat /\<\%(for\|while\|until\|loop\)\>/ display
