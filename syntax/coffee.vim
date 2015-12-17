@@ -39,11 +39,17 @@ syn match coffeeKeyword /\<for\s\+own\>/ contained containedin=coffeeRepeat
 \                       display
 hi def link coffeeKeyword Keyword
 
-syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/ display
+syn keyword coffeeOperator instanceof typeof delete
 hi def link coffeeOperator Operator
 
+syn match coffeeLength /\%(.*\)\.length/hs=e-5
+hi def link coffeeLength Label
+
+syn match coffeeFunction  /\s\?[-=]>/
+hi def link coffeeFunction Function
+
 " The first case matches symbol operators only if they have an operand before.
-syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.]\{-1,}\|[-=]>\|--\|++\|:/
+syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.]\{-1,}\|--\|++\|:/
 \                          display
 syn match coffeeExtendedOp /\<\%(and\|or\)=/ display
 hi def link coffeeExtendedOp coffeeOperator
@@ -214,7 +220,7 @@ syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeHeredoc,coffeeSpaceError,
 \                              coffeeSemicolonError,coffeeDotAccess,
 \                              coffeeProtoAccess,coffeeCurlies,coffeeBrackets,
-\                              coffeeParens
+\                              coffeeParens,coffeeFunction,coffeeLength
 
 if !exists('b:current_syntax')
   let b:current_syntax = 'coffee'
