@@ -50,15 +50,11 @@ syn match coffeeFunction  /\s\?[-=]>/
 hi def link coffeeFunction Function
 
 " The first case matches symbol operators only if they have an operand before.
-syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.]\{-1,}\|--\|++\|:/
+syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.,;]\{-1,}\|--\|++\|:/
 \                          display
 syn match coffeeExtendedOp /\<\%(and\|or\)=/ display
 hi def link coffeeExtendedOp coffeeOperator
 
-" This is separate from `coffeeExtendedOp` to help differentiate commas from
-" dots.
-syn match coffeeSpecialOp /[,;]/ display
-hi def link coffeeSpecialOp SpecialChar
 
 syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/ display
 hi def link coffeeBoolean Boolean
