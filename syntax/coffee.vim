@@ -39,19 +39,22 @@ syn match coffeeKeyword /\<for\s\+own\>/ contained containedin=coffeeRepeat
 \                       display
 hi def link coffeeKeyword Keyword
 
-syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/ display
+syn keyword coffeeOperator  instanceof typeof delete length
+\                       display
 hi def link coffeeOperator Operator
 
+syn match coffeeLength /\%(\S\.\)length/hs=e-5 containedin=@coffeeAll
+hi def link coffeeLength Label
+
+syn match coffeeFunction  /\s\?[-=]>/
+hi def link coffeeFunction Function
+
 " The first case matches symbol operators only if they have an operand before.
-syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.]\{-1,}\|[-=]>\|--\|++\|:/
+syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.,;]\{-1,}\|--\|++\|:/
 \                          display
 syn match coffeeExtendedOp /\<\%(and\|or\)=/ display
 hi def link coffeeExtendedOp coffeeOperator
 
-" This is separate from `coffeeExtendedOp` to help differentiate commas from
-" dots.
-syn match coffeeSpecialOp /[,;]/ display
-hi def link coffeeSpecialOp SpecialChar
 
 syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/ display
 hi def link coffeeBoolean Boolean
@@ -188,18 +191,22 @@ syn match coffeeProtoAccess /::\s*\%(\I\|\$\)\%(\i\|\$\)*/he=s+2 contains=@coffe
 hi def link coffeeProtoAccess coffeeExtendedOp
 
 " This is required for interpolations to work.
-syn region coffeeCurlies matchgroup=coffeeCurly start=/{/ end=/}/
+syn region coffeeCurlies matchgroup=coffeeBraces start=/{/ end=/}/
 \                        contains=@coffeeAll
 syn region coffeeBrackets matchgroup=coffeeBracket start=/\[/ end=/\]/
 \                         contains=@coffeeAll
-syn region coffeeParens matchgroup=coffeeParen start=/(/ end=/)/
+syn region coffeeParens matchgroup=coffeeBlockParen start=/(/ end=/)/
 \                       contains=@coffeeAll
 
 " These are highlighted the same as commas since they tend to go together.
-hi def link coffeeBlock coffeeSpecialOp
-hi def link coffeeBracket coffeeBlock
-hi def link coffeeCurly coffeeBlock
-hi def link coffeeParen coffeeBlock
+hi! def link coffeeParens Special
+hi! def link coffeeBlockParen Operator
+
+hi! def link coffeeCurlies Special
+hi! def link coffeeBraces Function
+
+hi! def link coffeeBrackets NONE
+hi! def link coffeeBracket Function
 
 " This is used instead of TOP to keep things coffee-specific for good
 " embedding. `contained` groups aren't included.
@@ -214,7 +221,7 @@ syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeHeredoc,coffeeSpaceError,
 \                              coffeeSemicolonError,coffeeDotAccess,
 \                              coffeeProtoAccess,coffeeCurlies,coffeeBrackets,
-\                              coffeeParens
+\                              coffeeParens,coffeeFunction,coffeeLength
 
 if !exists('b:current_syntax')
   let b:current_syntax = 'coffee'
