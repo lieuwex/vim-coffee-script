@@ -151,21 +151,29 @@ hi def link coffeeEscape SpecialChar
 " be followed by a number
 syn region coffeeRegex start=#\%(\%()\|\%(\i\|\$\)\@<!\d\)\s*\|\i\)\@<!/=\@!\s\@!#
 \                      end=#/[gimy]\{,4}\d\@!#
-\                      oneline contains=@coffeeBasicString,coffeeRegexCharSet
+\                      oneline contains=@coffeeBasicString,coffeeRegexCharSet,
+\                      coffeeRegexQuantifier,coffeeRegexEscape
 syn region coffeeRegexCharSet start=/\[/ end=/]/ contained
 \                             contains=@coffeeBasicString
-hi def link coffeeRegex String
-hi def link coffeeRegexCharSet coffeeRegex
+syn region coffeeRegexLength start=/{/ end=/}/ contained
+\                               contains=@coffeeBasicString
+syn match coffeeRegexQuantifier /[\*\+\?]/ contained
+syn match coffeeRegexEscape /\\[a-z]/ contained
+hi def link coffeeRegex Title
+hi def link coffeeRegexCharSet StringDelimiter
+hi def link coffeeRegexLength Comment
+hi def link coffeeRegexEscape Statement
+hi def link coffeeRegexQuantifier Boolean
 
 " A heregex
 syn region coffeeHeregex start=#///# end=#///[gimy]\{,4}#
 \                        contains=@coffeeInterpString,coffeeHeregexComment,
-\                                  coffeeHeregexCharSet
+\                                  coffeeHeregexCharSet,coffeeRegexLength,coffeeRegexQuantifier,coffeeRegexEscape
 \                        fold
 syn region coffeeHeregexCharSet start=/\[/ end=/]/ contained
 \                               contains=@coffeeInterpString
 hi def link coffeeHeregex coffeeRegex
-hi def link coffeeHeregexCharSet coffeeHeregex
+hi def link coffeeHeregexCharSet StringDelimiter
 
 " Heredoc strings
 syn region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
