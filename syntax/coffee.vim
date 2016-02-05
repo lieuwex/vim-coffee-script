@@ -207,8 +207,8 @@ syn region coffeeParens matchgroup=coffeeBlockParen start=/(/ end=/)/
 \                       contains=@coffeeAll
 
 " These are highlighted the same as commas since they tend to go together.
-hi! def link coffeeParens Special
-hi! def link coffeeBlockParen Operator
+" hi! def link coffeeParens Special
+" hi! def link coffeeBlockParen Operator
 
 hi! def link coffeeCurlies Special
 hi! def link coffeeBraces Function
