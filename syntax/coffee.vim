@@ -125,7 +125,7 @@ syn match coffeeComment /#.*/ contains=@Spell,coffeeTodo
 hi def link coffeeComment Comment
 
 syn region coffeeBlockComment start=/####\@!/ end=/###/
-\                             contains=@Spell,coffeeTodo,jsDocTags,jsCommentTodo,jsCvsTag,@jsHtml
+\                             contains=@Spell,coffeeTodo,javascriptDocTags,javascriptDocs
 hi def link coffeeBlockComment coffeeComment
 
 " A comment in a heregex
